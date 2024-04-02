@@ -3,6 +3,7 @@ import { shallowReactive, reactive, ref, computed, watch, watchEffect, nextTick 
 import { profiles, profilesPromise } from '../utils/profiles.js';
 import Welcome from "../components/Welcome.vue";
 import Help from "../components/Help.vue";
+import About from "../components/About.vue";
 import SpreadSheet from "../components/SpreadSheet.vue";
 import { Validator } from "../utils/profileValidator.js";
 import { ROCrate } from "ro-crate";
@@ -37,7 +38,8 @@ const data = shallowReactive({
   profileError: [],
   profileErrorDialog: false,
   validationResult: {},
-  showWelcome: false,
+  showHelp: false,
+  showAbout: false,
   validationResultDialog: false
 });
 window.data = data;
@@ -166,7 +168,10 @@ const commands = {
   },
 
   help() {
-    data.showWelcome = true;
+    data.showHelp = true;
+  },
+  about() {
+    data.showAbout = true;
   }
 };
 
@@ -326,7 +331,9 @@ function selectProfile(v) {
       <el-menu-item index="close" :disabled="!data.dirHandle">
         ⓧ Close
       </el-menu-item>
-
+      <el-menu-item index="about" title="About">
+        About
+      </el-menu-item>
       <el-menu-item index="help" title="Help">
         ﹖
       </el-menu-item>
@@ -412,14 +419,23 @@ function selectProfile(v) {
       </span>
     </template>
   </el-dialog>
-
-  <el-dialog v-if="data.showWelcome" v-model="data.showWelcome" title="Help" width="50%">
+  <el-dialog v-if="data.showAbout" v-model="data.showAbout" title="About" width="80%">
+    <div class="overflow-x-scroll h-96">
+      <about />
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="data.showAbout = false">Close</el-button>
+      </span>
+    </template>
+  </el-dialog>
+  <el-dialog v-if="data.showHelp" v-model="data.showHelp" title="Help" width="50%">
     <div class="overflow-x-scroll h-96">
       <help />
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="data.showWelcome = false">Close</el-button>
+        <el-button type="primary" @click="data.showHelp = false">Close</el-button>
       </span>
     </template>
   </el-dialog>
