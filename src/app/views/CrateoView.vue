@@ -419,7 +419,7 @@ function selectProfile(v) {
       </span>
     </template>
   </el-dialog>
-  <el-dialog v-if="data.showAbout" v-model="data.showAbout" title="About" width="80%">
+  <el-dialog v-if="data.showAbout" v-model="data.showAbout" title="About" width="80%" fullscreen>
     <div class="overflow-x-scroll h-96">
       <about />
     </div>
